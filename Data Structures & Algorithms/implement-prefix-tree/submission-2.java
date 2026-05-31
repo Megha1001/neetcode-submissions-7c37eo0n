@@ -1,0 +1,62 @@
+//TC : O(N)
+//SC : O(N)
+class PrefixTree {
+
+    class TrieNode{
+        boolean eow;
+        TrieNode children[];
+
+        TrieNode(){
+            this.eow = false;
+            this.children = new TrieNode[26];
+        }
+    }
+
+    private TrieNode root;
+
+    private TrieNode getNode(){
+        return new TrieNode();
+    }
+
+    public PrefixTree() {
+        root = new TrieNode();
+    }
+
+    public void insert(String word) {
+        TrieNode curr = root;
+        for(int i = 0; i < word.length(); i++){
+            char ch = word.charAt(i);
+            if(curr.children[ch - 'a'] == null){
+                curr.children[ch - 'a'] = getNode();
+            }
+            curr = curr.children[ch - 'a'];
+        }
+        curr.eow = true;
+
+    }
+
+    public boolean search(String word) {
+        TrieNode curr = root;
+        for(int i = 0; i < word.length(); i++){
+            char ch = word.charAt(i);
+            if(curr.children[ch - 'a'] == null){
+                return false;
+            }
+            curr = curr.children[ch - 'a'];
+        }
+        return curr != null && curr.eow;
+    }
+
+    public boolean startsWith(String prefix) {
+        TrieNode curr = root;
+        int i = 0;
+        for(i= 0; i < prefix.length(); i++){
+            char ch = prefix.charAt(i);
+            if(curr.children[ch - 'a'] == null){
+                return false;
+            }
+            curr = curr.children[ch - 'a'];
+        }
+        return i == prefix.length();
+    }
+}
