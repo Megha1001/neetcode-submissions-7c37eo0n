@@ -1,27 +1,18 @@
 class Solution {
     public int findPeakElement(int[] nums) {
-        //Peak element always exist where slop is higher - Binary Search
+        int left = 0;
+        int right = nums.length - 1;
 
-        int n = nums.length;
-        
-        if(n==1){
-            return 0;
-        }
+        while(left < right){
+            int mid = left + (right - left)/2;
 
-        int l = 0;
-        int h = n - 1;
-        while(l < h){ // not = otherwise it will go in infinite loop
-            int m = l + (h - l)/2;
-
-            if(nums[m] < nums[m+1]){
-                //go to right
-                l = m + 1;
-            }else{
-                //go to left including m
-                h = m;
+            if(nums[mid] < nums[mid + 1]){
+                left = mid + 1;
+            }else {
+                right = mid;
             }
         }
 
-        return l; // or h 
+        return left;
     }
 }
